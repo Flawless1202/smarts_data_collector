@@ -12,6 +12,7 @@ from examples import default_argument_parser
 
 from smarts.core.agent import AgentSpec, Agent
 from smarts.core.agent_interface import AgentInterface, AgentType
+from smarts.core.controllers import ActionSpaceType
 from smarts.core.sensors import Observation
 from smarts.core.utils.episodes import episodes
 
@@ -100,9 +101,8 @@ def project(ego_vehicle_pose, other_vehicle_pose, camera_pose, camera_intrinsic,
 
 def main(scenarios, sim_name, headless, num_episodes, seed, max_episode_steps=None):
     agent_spec = AgentSpec(
-        interface=AgentInterface.from_type(
-            AgentType.LanerWithSpeed, max_episode_steps=max_episode_steps
-        ),
+        interface=AgentInterface(
+                waypoints=True, action=ActionSpaceType.LaneWithContinuousSpeed, neighborhood_vehicles=True, rgb=True),
         agent_builder=perpetual_rider_agent.PerpetualRiderAgent,
     )
 
